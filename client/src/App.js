@@ -1,4 +1,5 @@
 import {Route,Switch} from 'react-router-dom'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import SignIn from './components/SignIn/SignIn.component';
 import SignUp from './components/SignUp/SignUp.component';
 import Home from './components/Home/Home.component';
