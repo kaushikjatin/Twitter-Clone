@@ -9,7 +9,7 @@ const path = require('path');
 
 // establishing connection with mongodb
 if(process.env.NODE_ENV!='production') require('dotenv').config()
-const url=process.env.MONGODB_URL
+const url='mongodb+srv://Jatin:R070573k@cluster0.29mkz.mongodb.net/NewApp?retryWrites=true&w=majority'
 const connectionParams={
     useNewUrlParser: true,
     useUnifiedTopology: true 
@@ -28,6 +28,11 @@ app.use(cors())
 app.use(bodyparser.json()) 
 app.use(bodyparser.urlencoded({extended:true}))
 
+
+
+app.use('/user',require('./router/UserActions'));
+app.use('/user/auth',require('./router/Sign_Signup'));
+
 if(process.env.NODE_ENV=='production')
 {
     app.use(express.static(path.join(__dirname,'client/build')));
@@ -36,10 +41,6 @@ if(process.env.NODE_ENV=='production')
         res.sendFile(path.join(__dirname,'client/build/index.html'));
     })
 }
-
-
-app.use('/user',require('./router/UserActions'));
-app.use('/user/auth',require('./router/Sign_Signup'));
 
 
 const port = process.env.PORT || 8000
