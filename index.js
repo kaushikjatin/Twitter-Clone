@@ -27,6 +27,15 @@ app.use(cors())
 app.use(bodyparser.json()) 
 app.use(bodyparser.urlencoded({extended:true}))
 
+if(process.env.NODE_ENV=='production')
+{
+    app.use(express.static(path.join(__dirname,'client/build')));
+
+    app.get('*',function(req,res){
+        res.sendFile(path.join(__dirname,'client/build/index.html'));
+    })
+}
+
 
 app.get('/',(req,res)=>{
     res.status(200).json({
@@ -36,16 +45,6 @@ app.get('/',(req,res)=>{
 
 app.use('/user',require('./router/UserActions'));
 app.use('/user/auth',require('./router/Sign_Signup'));
-
-
-if(process.env.NODE_ENV=='production')
-{
-    app.use(express.static(path.join(__dirname,'client/build')));
-
-    app.get('*',function(req,res){
-        res.sendFile(path.join(__dirname,'client/build/index.html'));
-    })
-}
 
 
 const port = process.env.PORT || 8000
